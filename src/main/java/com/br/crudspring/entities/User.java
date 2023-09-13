@@ -1,6 +1,5 @@
 package com.br.crudspring.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table (name = "tb_user")
+@Table(name = "tb_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +20,10 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
-    @OneToMany (mappedBy = "client")
+    @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
-     public User() {
+    public User() {
     }
 
     public User(Long id, String name, String email, String phone, String password) {
@@ -59,6 +58,26 @@ public class User implements Serializable {
 
     public List<Order> orders() {
         return orders;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

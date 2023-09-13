@@ -1,9 +1,7 @@
 package com.br.crudspring.resources;
 
 import com.br.crudspring.entities.Category;
-import com.br.crudspring.entities.Order;
 import com.br.crudspring.services.CategoryService;
-import com.br.crudspring.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,12 +2,12 @@ package com.br.crudspring.entities;
 
 import com.br.crudspring.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -15,15 +15,15 @@ public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrderItemPK id =  new OrderItemPK();
+    private OrderItemPK id = new OrderItemPK();
     private Double price;
     private Integer quantity;
 
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product,  Integer quantity, Double price) {
-        id.setOrder (order);
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        id.setOrder(order);
         id.setProduct(product);
         this.price = price;
         this.quantity = quantity;
@@ -47,20 +47,25 @@ public class OrderItem implements Serializable {
     }
 
     @JsonIgnore
-    public Order getOrder (){
+    public Order getOrder() {
         return id.getOrder();
     }
-    public Product getProduct (){
-        return id.getProduct();
-    }
-    public void setProduct(Product product){
-        id.setProduct(product);
-    }
-    public void setOrder(Order order){
+
+    public void setOrder(Order order) {
         id.setOrder(order);
     }
 
+    public Product getProduct() {
+        return id.getProduct();
+    }
 
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
+
+    public Double getSubTotal (){
+        return price * quantity;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
