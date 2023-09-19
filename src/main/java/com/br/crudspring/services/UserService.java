@@ -2,7 +2,10 @@ package com.br.crudspring.services;
 
 import com.br.crudspring.entities.User;
 import com.br.crudspring.repositories.UserRepository;
+import com.br.crudspring.services.exceptions.DatabaseException;
+import com.br.crudspring.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +23,7 @@ public class UserService {
 
     public User findById (Long id){
         Optional <User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert (User user){
@@ -28,7 +31,14 @@ public class UserService {
     }
 
     public void delete (Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e ){
+            throw new ResourceNotFoundException(id);
+        }catch (RuntimeException e ){
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
 
     public User update (Long id, User user){
